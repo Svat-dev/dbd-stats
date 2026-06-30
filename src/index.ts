@@ -1,8 +1,8 @@
 import "dotenv/config"
 
 import express from "express"
-import { StatsRoute } from "./routes/stats"
-import { Logger } from "./shared/logger"
+import { StatsRoute } from "./routes/stats.js"
+import { Logger } from "./shared/logger.js"
 
 const app = express()
 

@@ -1,11 +1,11 @@
 import axios, { AxiosError, HttpStatusCode } from "axios"
 import { API } from "deadbydaylight.js"
 import type { Request, Response } from "express"
-import { APP_ID, STEAM_MEDIA_URL, STEAM_URL } from "../shared/constants"
-import { ThrowError } from "../shared/errors"
-import { GetLogString } from "../shared/logger"
-import type { StatsResponse } from "../types/stats-response.type"
-import type { SteamGamesResponse } from "../types/steam-response.type"
+import { APP_ID, STEAM_MEDIA_URL, STEAM_URL } from "../shared/constants.js"
+import { ThrowError } from "../shared/errors.js"
+import { GetLogString } from "../shared/logger.js"
+import type { StatsResponse } from "../types/stats-response.type.js"
+import type { SteamGamesResponse } from "../types/steam-response.type.js"
 
 export async function StatsRoute(req: Request, res: Response) {
 	const API_KEY = process.env.API_KEY
