@@ -1,15 +1,11 @@
-# dbd-stats
+# Dead by daylight staistics API (By player for players)
 
-To install dependencies:
+This is the API for the game dead by daylight. It is aimed at **unofficial** statistics for players
 
-```bash
-bun install
-```
+## Why have I done it?
 
-To run:
+I originally created this for the [DiscordWidgets API](https://discordwidgets.com) to integrate it in the discord widget and show off my activity. But then it turned into a pet project.
 
-```bash
-bun run index.ts
-```
+## Usage
 
-This project was created using `bun init` in bun v1.4.0. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+It's a source code for server https://dbd-stats-one.vercel.app. Only works route is `/dbd/stats`
