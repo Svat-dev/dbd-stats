@@ -1,6 +1,7 @@
 import "dotenv/config"
 
 import express from "express"
+import { StatsRoute } from "./routes/stats"
 import { Logger } from "./shared/logger"
 
 const app = express()
@@ -8,6 +9,8 @@ const app = express()
 app.disable("x-powered-by")
 
 app.use(Logger)
+
+app.get("/dbd/stats", StatsRoute)
 
 const PORT = process.env.PORT || 3000
 
