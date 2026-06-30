@@ -1,8 +1,10 @@
 import axios, { AxiosError, HttpStatusCode } from "axios"
+import { API } from "deadbydaylight.js"
 import type { Request, Response } from "express"
 import { APP_ID, STEAM_MEDIA_URL, STEAM_URL } from "../shared/constants"
 import { ThrowError } from "../shared/errors"
 import { GetLogString } from "../shared/logger"
+import type { StatsResponse } from "../types/stats-response.type"
 import type { SteamGamesResponse } from "../types/steam-response.type"
 
 export async function StatsRoute(req: Request, res: Response) {
@@ -30,6 +32,42 @@ export async function StatsRoute(req: Request, res: Response) {
 
 		if (!basicGameInfo.has_community_visible_stats) ThrowError(res, HttpStatusCode.Conflict, "Your's profile must be public for stats!")
 
+		const api = await API.fetchUser(steamId as string, API_KEY)
+
+		const {
+			bloodweb_max_points_in_one_category,
+			bloodweb_total_points_spended,
+			items_depleted,
+			max_prestige_level,
+			survivor_rank,
+			killer_rank
+		} = api.stats()
+
+		const surv = api.survivor()
+		const killer = api.killer()
+
+		const result: StatsResponse<typeof surv, typeof killer> = {
+			general: {
+				game_name: basicGameInfo.name,
+				icon_url: STEAM_MEDIA_URL(basicGameInfo.img_icon_url),
+				playtime_forever: basicGameInfo.playtime_forever,
+				playtime_2weeks: basicGameInfo.playtime_2weeks,
+				bloodweb_max_points_in_one_category,
+				bloodweb_total_points_spended,
+				items_depleted,
+				max_prestige_level
+			},
+			survivor: {
+				rank: survivor_rank.rank_name,
+				...surv
+			},
+			killer: {
+				rank: killer_rank.rank_name,
+				...killer
+			}
+		}
+
+		return res.status(HttpStatusCode.Ok).send(result)
 	} catch (e) {
 		if (e instanceof AxiosError) {
 			console.error(GetLogString(e.status || 500, "AXIOS", e.config?.method, "", JSON.stringify(e.response?.data)))
