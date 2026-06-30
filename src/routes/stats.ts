@@ -50,8 +50,8 @@ export async function StatsRoute(req: Request, res: Response) {
 			general: {
 				game_name: basicGameInfo.name,
 				icon_url: STEAM_MEDIA_URL(basicGameInfo.img_icon_url),
-				playtime_forever: basicGameInfo.playtime_forever,
-				playtime_2weeks: basicGameInfo.playtime_2weeks,
+				playtime_forever: Math.round(basicGameInfo.playtime_forever / 60),
+				playtime_2weeks: Math.round(basicGameInfo.playtime_2weeks / 60),
 				bloodweb_max_points_in_one_category,
 				bloodweb_total_points_spended,
 				items_depleted,
@@ -59,7 +59,13 @@ export async function StatsRoute(req: Request, res: Response) {
 			},
 			survivor: {
 				rank: survivor_rank.rank_name,
-				...surv
+				...surv,
+				generators_done: Math.round(surv.generators_done),
+				generators_broken_repaired: Math.round(surv.generators_broken_repaired),
+				healing_done: Math.round(surv.healing_done),
+				healing_being_injured: Math.round(surv.healing_being_injured),
+				healing_being_obsession: Math.round(surv.healing_being_obsession),
+				healing_while_rest_is_injured: Math.round(surv.healing_while_rest_is_injured)
 			},
 			killer: {
 				rank: killer_rank.rank_name,
