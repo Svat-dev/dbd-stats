@@ -3,6 +3,7 @@ import "dotenv/config"
 import express from "express"
 import * as path from "node:path"
 import { fileURLToPath } from "node:url"
+import { IndexRoute } from "./routes/index.js"
 import { StatsRoute } from "./routes/stats.js"
 import { Logger } from "./shared/logger.js"
 
@@ -16,6 +17,8 @@ app.disable("x-powered-by")
 app.use(Logger)
 
 app.use(express.static(path.join(__dirname, "..", "public")))
+
+app.get("/", IndexRoute)
 
 app.get("/dbd/stats", StatsRoute)
 
