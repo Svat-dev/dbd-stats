@@ -17,8 +17,10 @@ interface General {
 
 type Survivor<T> = {
 	rank: string
+	rank_icon_url: string
 } & T
 
 type Killer<T> = {
 	rank: string
+	rank_icon_url: string
 } & T

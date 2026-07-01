@@ -59,6 +59,7 @@ export async function StatsRoute(req: Request, res: Response) {
 			},
 			survivor: {
 				rank: survivor_rank.rank_name,
+				rank_icon_url: rankUrl(survivor_rank.rank_name),
 				...surv,
 				generators_done: Math.round(surv.generators_done),
 				generators_broken_repaired: Math.round(surv.generators_broken_repaired),
@@ -69,6 +70,7 @@ export async function StatsRoute(req: Request, res: Response) {
 			},
 			killer: {
 				rank: killer_rank.rank_name,
+				rank_icon_url: rankUrl(killer_rank.rank_name),
 				...killer
 			}
 		}
@@ -80,4 +82,13 @@ export async function StatsRoute(req: Request, res: Response) {
 		}
 		return ThrowError(res, HttpStatusCode.InternalServerError)
 	}
+}
+
+const rankUrl = (rank: string): string => {
+	const name = rank.toLowerCase().split(" ")[0]
+	const appUrl = process.env.APP_URL
+
+	if (!appUrl) return ""
+
+	return appUrl + `/media/rank/${name}.png`
 }
